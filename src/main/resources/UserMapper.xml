@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<mapper namespace="cn.haohaoli.jdbc.UserMapper">
+
+    <!--  唯一标识 namespace.id 方法的唯一性 statementId  -->
+    <!--  resultType 指定返回值. 可以利用反射完成自动封装  -->
+    <select id="selectAll" resultType="cn.haohaoli.jdbc.User" statementType="PREPARED">
+        select * from user
+    </select>
+
+    <!--  parameterType 设置属性 利用反射
+        select * from user where id = ?
+        将原来的`?`占位符使用新的占位符.#{属性}. 才可以使用反射
+    -->
+    <select id="selectById" resultType="cn.haohaoli.jdbc.User" parameterType="cn.haohaoli.jdbc.User" statementType="PREPARED">
+        select * from user where id = #{id}
+    </select>
+
+    <select id="selectByIdAndName" resultType="cn.haohaoli.jdbc.User" >
+        select * from user where id = #{id} and name = #{name}
+    </select>
+
+    <insert id="insert" parameterType="cn.haohaoli.jdbc.User" statementType="PREPARED">
+        insert into user (id, name) values (#{id},#{name})
+    </insert>
+
+    <update id="updateById" parameterType="cn.haohaoli.jdbc.User" statementType="PREPARED">
+        update user set name = #{name} where id = #{id}
+    </update>
+
+    <delete id="deleteById" parameterType="cn.haohaoli.jdbc.User" statementType="PREPARED">
+        delete from user where id = #{id}
+    </delete>
+</mapper>
